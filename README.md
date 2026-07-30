@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Personal Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A personal productivity dashboard with a to-do list, notes, calendar, and reminder system. Built with a React frontend and a Python/Flask backend.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **To-do list** — add, reorder (drag-and-drop), and delete tasks
+- **Reminders** — attach a date/time reminder to any task; browser notification fires when the time arrives
+- **Notes** — persistent text area auto-saved to the backend
+- **Calendar** — monthly view (react-calendar) with reminder indicators on dates
+- **Auth** — username/password login; sessions backed by server-side tokens stored in SQLite; password change supported
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, react-calendar |
+| Backend | Python 3, Flask, Flask-CORS, bcrypt |
+| Database | SQLite (via Python `sqlite3`) |
+| Auth | Server-issued token stored in `localStorage` |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+```
+.
+├── src/
+│   ├── App.js          # main React component (auth, todos, notes, calendar)
+│   ├── App.css         # styles
+│   └── index.js        # React entry point
+├── backend/
+│   ├── server.py       # Flask API server (port 3010)
+│   ├── requirements.txt
+│   └── reset_password.py
+├── public/
+└── package.json
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Running Locally
 
-### `npm run build`
+### 1. Start the backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate      # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python server.py              # runs on http://localhost:3010
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Start the frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# from the repo root
+npm install
+npm start                     # runs on http://localhost:3000
+```
 
-### `npm run eject`
+Open `http://localhost:3000` in your browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## API Endpoints
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/login` | Authenticate; returns session token |
+| POST | `/api/logout` | Invalidate token |
+| POST | `/api/change-password` | Change password for logged-in user |
+| GET | `/api/todos` | Fetch all todos for the user |
+| POST | `/api/todos` | Create a todo |
+| PUT | `/api/todos/:id` | Update a todo (text, order, reminder) |
+| DELETE | `/api/todos/:id` | Delete a todo |
+| GET | `/api/notes` | Fetch notes for the user |
+| POST | `/api/notes` | Save notes |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Environment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The frontend expects the backend at `http://localhost:3010/api`. If you deploy the backend elsewhere, update `API_URL` in `src/App.js`.
 
-## Learn More
+## Resetting a Password
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cd backend
+source venv/bin/activate
+python reset_password.py <username> <new_password>
+```

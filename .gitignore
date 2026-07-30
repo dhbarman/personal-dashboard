@@ -21,3 +21,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Python backend
+backend/venv/
+backend/__pycache__/
+backend/todos.db
+backend/*.pyc
+__pycache__/
+
+# Claude internal
+.claude/
+
+# Scratch/backup files
+src/App_backup1.js
+src/App-NoPythonBackend.js
