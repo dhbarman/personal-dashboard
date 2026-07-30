@@ -1,13 +1,16 @@
 # Personal Dashboard
 
-A personal productivity dashboard with a to-do list, notes, calendar, and reminder system. Built with a React frontend and a Python/Flask backend.
+A personal productivity dashboard with five panels: To-Do List, Notes, Expense Tracker, Monthly Payments, and Bookmarks. Built with a React frontend and a Python/Flask backend.
 
 ## Features
 
 - **To-do list** — add, reorder (drag-and-drop), and delete tasks
 - **Reminders** — attach a date/time reminder to any task; browser notification fires when the time arrives
-- **Notes** — persistent text area auto-saved to the backend
+- **Notes** — persistent textarea auto-saved to the backend
 - **Calendar** — monthly view (react-calendar) with reminder indicators on dates
+- **Expense Tracker** — log expenses with description, category, amount (₹), and date
+- **Monthly Payments** — track recurring payments with amount, due date, and payment source (e.g. credit card, UPI)
+- **Bookmarks** — save, edit, and open URLs; auto-prefixes `https://` if missing
 - **Auth** — username/password login; sessions backed by server-side tokens stored in SQLite; password change supported
 
 ## Tech Stack
@@ -47,6 +50,8 @@ pip install -r requirements.txt
 python server.py              # runs on http://localhost:3010
 ```
 
+Default credentials on first run: `admin` / `changeme`. Change the password after login.
+
 ### 2. Start the frontend
 
 ```bash
@@ -64,12 +69,16 @@ Open `http://localhost:3000` in your browser.
 | POST | `/api/login` | Authenticate; returns session token |
 | POST | `/api/logout` | Invalidate token |
 | POST | `/api/change-password` | Change password for logged-in user |
-| GET | `/api/todos` | Fetch all todos for the user |
-| POST | `/api/todos` | Create a todo |
-| PUT | `/api/todos/:id` | Update a todo (text, order, reminder) |
-| DELETE | `/api/todos/:id` | Delete a todo |
-| GET | `/api/notes` | Fetch notes for the user |
-| POST | `/api/notes` | Save notes |
+| GET / POST | `/api/todos` | List or create todos |
+| POST | `/api/todos/reorder` | Update todo order |
+| PUT / DELETE | `/api/todos/:id` | Update or delete a todo |
+| GET / PUT | `/api/notes` | Get or save notes |
+| GET / POST | `/api/expenses` | List or add expenses |
+| DELETE | `/api/expenses/:id` | Delete an expense |
+| GET / POST | `/api/payments` | List or add monthly payments |
+| PUT / DELETE | `/api/payments/:id` | Update or delete a monthly payment |
+| GET / POST | `/api/bookmarks` | List or add bookmarks |
+| PUT / DELETE | `/api/bookmarks/:id` | Update or delete a bookmark |
 
 ## Environment
 
