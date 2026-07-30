@@ -8,7 +8,7 @@ A personal productivity dashboard with five panels: To-Do List, Notes, Expense T
 - **Reminders** — attach a date/time reminder to any task; browser notification fires when the time arrives
 - **Notes** — persistent textarea auto-saved to the backend
 - **Calendar** — monthly view (react-calendar) with reminder indicators on dates
-- **Expense Tracker** — log expenses with description, category, amount (₹), and date
+- **Expense Tracker** — log expenses with description, category, amount ($), and date
 - **Monthly Payments** — track recurring payments with amount, due date, and payment source (e.g. credit card, UPI)
 - **Bookmarks** — save, edit, and open URLs; auto-prefixes `https://` if missing
 - **Auth** — username/password login; sessions backed by server-side tokens stored in SQLite; password change supported
